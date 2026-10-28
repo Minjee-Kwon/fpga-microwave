@@ -1,0 +1,11 @@
+stateDiagram-v2
+    state "모드 0 / LED0 / 정회전" as M0
+    state "모드 1 / LED1 / 역회전" as M1
+    state "모드 2 / LED2 / 교대 회전" as M2
+    [*] --> M0
+    M0 --> M1: U
+    M1 --> M2: U
+    M2 --> M0: U
+    M0 --> M2: D
+    M2 --> M1: D
+    M1 --> M0: D

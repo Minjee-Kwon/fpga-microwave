@@ -1,0 +1,16 @@
+stateDiagram-v2
+    state "설정 / 정지" as READY
+    state "운전 중" as RUNNING
+    state "종료 표시" as FINISH
+    state "문 열림 / 정지" as DOOR_OPEN
+    [*] --> READY: reset
+    READY --> READY: 로터리 ±1초
+    READY --> RUNNING: C / 시간 > 0 / 문 닫힘
+    RUNNING --> READY: L / 남은 시간 유지
+    RUNNING --> FINISH: done / 남은 시간 0
+    FINISH --> READY: 3회 점멸 완료 또는 재설정
+    READY --> DOOR_OPEN: btn5
+    RUNNING --> DOOR_OPEN: btn5 / 카운트와 모터 정지
+    FINISH --> DOOR_OPEN: btn5
+    DOOR_OPEN --> DOOR_OPEN: 로터리 ±1초
+    DOOR_OPEN --> READY: btn6 / 자동 재시작 없음
