@@ -1,0 +1,58 @@
+XVLOG (simple functional testbench)
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/src/btn_debounce.v" into library work
+INFO: [VRFC 10-311] analyzing module btn_debounce
+INFO: [VRFC 10-311] analyzing module btn_debouncer
+INFO: [VRFC 10-311] analyzing module debouncer
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/src/buzzer_controller.v" into library work
+INFO: [VRFC 10-311] analyzing module buzzer_controller
+INFO: [VRFC 10-311] analyzing module play_melody
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/src/fnd_controller.v" into library work
+INFO: [VRFC 10-311] analyzing module fnd_controller
+INFO: [VRFC 10-311] analyzing module fnd_core
+INFO: [VRFC 10-311] analyzing module fnd_digit_select
+INFO: [VRFC 10-311] analyzing module bin2bcd_4digit
+INFO: [VRFC 10-311] analyzing module fnd_digit_display
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/src/microwave_fsm.v" into library work
+INFO: [VRFC 10-311] analyzing module microwave_fsm
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/src/microwave_top.v" into library work
+INFO: [VRFC 10-311] analyzing module microwave_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/src/motor_controller.v" into library work
+INFO: [VRFC 10-311] analyzing module motor_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/src/rotary.v" into library work
+INFO: [VRFC 10-311] analyzing module rotary
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/src/servo_controller.v" into library work
+INFO: [VRFC 10-311] analyzing module servo_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/src/timer.v" into library work
+INFO: [VRFC 10-311] analyzing module timer
+INFO: [VRFC 10-2263] Analyzing Verilog file "<workspace>/outputs/fpga-microwave-controller/sim/tb_microwave.v" into library work
+INFO: [VRFC 10-311] analyzing module tb_microwave
+
+XELAB
+Vivado Simulator 2020.2
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Multi-threading is on. Using 14 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.debouncer
+Compiling module work.btn_debouncer
+Compiling module work.btn_debounce
+Compiling module work.rotary
+Compiling module work.timer
+Compiling module work.microwave_fsm
+Compiling module work.fnd_digit_select
+Compiling module work.bin2bcd_4digit
+Compiling module work.fnd_digit_display
+Compiling module work.fnd_core
+Compiling module work.fnd_controller
+Compiling module work.play_melody
+Compiling module work.buzzer_controller
+Compiling module work.servo_controller
+Compiling module work.motor_controller
+Compiling module work.microwave_top
+Compiling module work.tb_microwave
+ERROR: [XSIM 43-3409] Failed to compile generated C file xsim.dir/simple_demo/obj/xsim_1.c.
+ERROR: [XSIM 43-3915] Encountered a fatal error. Cannot continue. Exiting... 

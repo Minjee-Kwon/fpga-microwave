@@ -1,0 +1,5 @@
+Repository XDC static audit
+Active PACKAGE_PIN assignments: 44
+Distinct FPGA pins: 44
+Duplicate assignments: 0
+Scope: static constraint check, not hardware measurement
