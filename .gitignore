@@ -24,3 +24,8 @@ build/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Simulation outputs
+vivado_sim/
+xsim.dir/
+*.vcd
