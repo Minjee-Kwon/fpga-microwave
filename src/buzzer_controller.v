@@ -1,40 +1,79 @@
 `timescale 1ns/1ps
-module buzzer_controller
-(input wire clk,reset,button_event,door_event,door_open,done,cancel,output wire buzzer);
- reg door_direction;reg [1:0] kind;reg [31:0] elapsed;reg [6:0] notes;
- reg [31:0] duration;
- localparam integer NOTE=(100000000/4<1)?1:100000000/4;
- localparam integer BEEP_LENGTH=(100000000/15<1)?1:100000000/15;
- wire expired=((kind==1)&&(elapsed>=BEEP_LENGTH-1)) ||
+module buzzer_controller(
+    input clk,
+    input reset,
+    input button_event,
+    input door_event,
+    input door_open,
+    input done,
+    input cancel,
+    output wire buzzer
+    );
+    reg door_direction;
+    reg [1:0] kind;
+    reg [31:0] elapsed;
+    reg [6:0] notes;
+    reg [31:0] duration;
+    localparam integer NOTE=(100000000/4<1)?1:100000000/4;
+    localparam integer BEEP_LENGTH=(100000000/15<1)?1:100000000/15;
+    wire expired=((kind==1)&&(elapsed>=BEEP_LENGTH-1)) ||
               ((kind==2)&&(elapsed>=2*NOTE-1)) ||
               ((kind==3)&&(elapsed>=6*NOTE-1));
- wire [1:0] unused_led;
- always @* begin
-  notes=0;duration=0;
-  case(kind)
-   1:begin notes=7'b1000000;duration=(100000000/15<1)?1:100000000/15;end
-   2:begin notes=door_direction?((elapsed<NOTE)?7'b0000001:7'b0010000):((elapsed<NOTE)?7'b0010000:7'b0000001);duration=2*NOTE;end
-   3:begin
-    duration=6*NOTE;
-    if(elapsed<NOTE) notes=7'b0000001;
-    else if(elapsed<2*NOTE) notes=7'b0000100;
-    else if(elapsed<3*NOTE) notes=7'b0010000;
-    else if(elapsed<4*NOTE) notes=7'b0000001;
-    else if(elapsed<5*NOTE) notes=7'b0000100;
-    else notes=7'b0010000;
-   end
-  endcase
- end
- play_melody sound(.clk(clk),.reset(reset),.btn(notes),.led(unused_led),.buzzer(buzzer));
- always @(posedge clk or posedge reset) begin
-  if(reset) begin kind<=0;elapsed<=0;door_direction<=0;end
-  else if(cancel) begin kind<=1;elapsed<=0;end
-  else if(done) begin kind<=3;elapsed<=0;end
-  else if(door_event) begin kind<=2;elapsed<=0;door_direction<=door_open;end
-  else if(button_event && kind!=3) begin kind<=1;elapsed<=0;end
-  else if(kind!=0) begin
-   if(expired) begin kind<=0;elapsed<=0;end
-   else elapsed<=elapsed+1'b1;
+    wire [1:0] unused_led;
+
+    always @* begin
+        notes=0;
+        duration=0;
+        case(kind)
+        1:begin 
+            notes=7'b1000000;
+            duration=(100000000/15<1)?1:100000000/15;
+        end
+        2:begin 
+            notes=door_direction?((elapsed<NOTE)?7'b0000001:7'b0010000):((elapsed<NOTE)?7'b0010000:7'b0000001);
+            duration=2*NOTE;
+        end
+        3:begin
+            duration=6*NOTE;
+            if(elapsed<NOTE) notes=7'b0000001;
+            else if(elapsed<2*NOTE) notes=7'b0000100;
+            else if(elapsed<3*NOTE) notes=7'b0010000;
+            else if(elapsed<4*NOTE) notes=7'b0000001;
+            else if(elapsed<5*NOTE) notes=7'b0000100;
+            else notes=7'b0010000;
+            end
+        endcase
+    end
+    play_melody sound(
+        .clk(clk),
+        .reset(reset),
+        .btn(notes),
+        .led(unused_led),
+        .buzzer(buzzer)
+    );
+    always @(posedge clk or posedge reset) begin
+        if(reset) begin 
+            kind<=0;
+            elapsed<=0;
+            door_direction<=0;
+        end else if(cancel) begin 
+            kind<=1;
+            elapsed<=0;
+        end else if(done) begin 
+            kind<=3;
+            elapsed<=0;
+        end else if(door_event) begin 
+            kind<=2;
+            elapsed<=0;
+            door_direction<=door_open;
+        end else if(button_event && kind!=3) begin 
+            kind<=1;
+            elapsed<=0;
+        end else if(kind!=0) begin 
+            if(expired) begin 
+                kind<=0;
+                elapsed<=0;
+        end else elapsed<=elapsed+1'b1;
   end
  end
 endmodule

@@ -10,10 +10,11 @@ module motor_controller(
 
     reg alternate_dir,current_dir,ready;
     reg [1:0] prev_mode;
-     reg [28:0] reverse_count;
- reg [18:0] dead_count;
- wire desired=(mode==1)?1'b1:(mode==2)?alternate_dir:1'b0;
- wire active=enable && ready && (current_dir==desired);
+    reg [28:0] reverse_count;
+    reg [18:0] dead_count;
+
+    wire desired=(mode==1)?1'b1:(mode==2)?alternate_dir:1'b0;
+    wire active=enable && ready && (current_dir==desired);
  assign motor_pwm=active;
  assign in1=active && !current_dir;
  assign in2=active && current_dir;

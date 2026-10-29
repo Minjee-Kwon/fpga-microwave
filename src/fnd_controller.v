@@ -1,27 +1,57 @@
 `timescale 1ns/1ps
-module fnd_controller
-(input wire clk,reset,input wire [12:0] seconds,input wire running,finish,blank,
- output wire [3:0] an,output wire [7:0] seg);
- localparam integer SCAN=100000;
- reg [31:0] scan_count,display_count;reg circle;
- wire tick=(scan_count==SCAN-1);
- wire [6:0] minutes=seconds/60;
- wire [5:0] secs=seconds%60;
- wire [13:0] packed_time=finish?14'b0:{1'b1,minutes,secs};
- wire [3:0] raw_an;wire [7:0] raw_seg;
- always @(posedge clk or posedge reset) begin
-  if(reset) begin scan_count<=0;display_count<=0;circle<=0;end
-  else begin
-   if(tick) scan_count<=0;else scan_count<=scan_count+1'b1;
-   if(!running) begin display_count<=0;circle<=0;end
-   else if(display_count==99999999) begin display_count<=0;circle<=~circle;end
-   else display_count<=display_count+1'b1;
-  end
- end
- fnd_core display(.clk(clk),.reset(reset),.tick(tick),.anim_on(running&&circle&&!finish),
-  .sw_mode(1'b0),.in_data(packed_time),.an(raw_an),.seg(raw_seg));
- assign an=blank?4'b1111:raw_an;
- assign seg=blank?8'hFF:raw_seg;
+module fnd_controller(
+    input clk,
+    input reset,
+    input [12:0] seconds,
+    input running,
+    inout finish,
+    input blank,
+    output [3:0] an,
+    output [7:0] seg
+    );
+
+    localparam integer SCAN=100000; // FND 표시 자리를 바꾸는 간격을 정하는 상수
+    reg [31:0] scan_count,display_count;
+    reg circle;
+    wire tick=(scan_count==SCAN-1);
+    
+    wire [6:0] minutes=seconds/60;
+    wire [5:0] secs=seconds%60;
+    wire [13:0] packed_time=finish?14'b0:{1'b1,minutes,secs};
+    wire [3:0] raw_an;
+    wire [7:0] raw_seg;
+    
+    always @(posedge clk or posedge reset) begin
+        if(reset) begin 
+            scan_count<=0;
+            display_count<=0;
+            circle<=0;
+        end else begin
+            if(tick) 
+                scan_count<=0;
+            else 
+                scan_count<=scan_count+1'b1;
+            if(!running) begin 
+                display_count<=0;
+                circle<=0;
+            end else if(display_count==99999999) begin 
+                display_count<=0;
+                circle<=~circle;
+            end else display_count<=display_count+1'b1;
+        end
+    end
+    fnd_core display(
+        .clk(clk),
+        .reset(reset),
+        .tick(tick),
+        .anim_on(running&&circle&&!finish),
+        .sw_mode(1'b0),
+        .in_data(packed_time),
+        .an(raw_an),
+        .seg(raw_seg)
+    );
+    assign an=blank?4'b1111:raw_an;
+    assign seg=blank?8'hFF:raw_seg;
 endmodule
 
 module fnd_core(
@@ -269,6 +299,6 @@ module fnd_digit_display(
         if(sel == 2'b10 && dot) seg[7] = 1'b0;
         else  seg[7] = 1'b1;
     end
-    end
+end
 
 endmodule

@@ -16,35 +16,35 @@ module btn_debouncer(
     output [6:0] clean_btn
 );
 
-    debouncer u_btnU_debouncer(
+    debouncer u_btnC_debouncer(
         .clk(clk),
         .reset(reset),
         .noisy_btn(noisy_btn[0]),
         .clean_btn(clean_btn[0])
     );
 
-    debouncer u_btnL_debouncer(
+    debouncer u_btnU_debouncer(
         .clk(clk),
         .reset(reset),
         .noisy_btn(noisy_btn[1]),
         .clean_btn(clean_btn[1])
     );
 
-    debouncer u_btnC_debouncer(
+    debouncer u_btnD_debouncer(
         .clk(clk),
         .reset(reset),
         .noisy_btn(noisy_btn[2]),
         .clean_btn(clean_btn[2])
     );
 
-    debouncer u_btnR_debouncer(
+    debouncer u_btnL_debouncer(
         .clk(clk),
         .reset(reset),
         .noisy_btn(noisy_btn[3]),
         .clean_btn(clean_btn[3])
     );
 
-    debouncer u_btnD_debouncer(
+    debouncer u_btnR_debouncer(
         .clk(clk),
         .reset(reset),
         .noisy_btn(noisy_btn[4]),
