@@ -39,7 +39,9 @@ Basys 3의 내장 버튼·LED·FND와 외부 로터리, 부저, DC 모터 드라
 
 ## 전체 블록 다이어그램
 
-![전체 블록 다이어그램](docs/images/block_diagram.png)
+![전체 블록 다이어그램](docs/images/microwave_block_filled.png)
+
+[원본 크기로 보기](docs/images/microwave_block_filled.png) · [편집용 SVG](docs/images/microwave_block_filled.svg)
 
 시간 설정 경로는 **`rotary → timer → fnd_controller`**입니다. `microwave_fsm`은 타이머의 시작/정지, 모터 허용, 문 상태, 종료 표시를 제어합니다. 타이머의 `done`은 FSM과 부저에 전달됩니다.
 
